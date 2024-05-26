@@ -8,6 +8,9 @@ WORKDIR /app
 COPY .mvn/ .mvn
 COPY mvnw pom.xml ./
 
+# Set executable permissions for the Maven wrapper
+RUN chmod +x mvnw
+
 # Install the dependencies and package the application
 RUN ./mvnw dependency:go-offline
 RUN ./mvnw clean package -DskipTests
@@ -17,4 +20,4 @@ ARG JAR_FILE=target/*.jar
 COPY ${JAR_FILE} app.jar
 
 # Run the jar file
-ENTRYPOINT ["java","-jar","app.jar"]
+ENTRYPOINT ["java", "-jar", "app.jar"]
